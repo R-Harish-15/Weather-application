@@ -18,7 +18,7 @@ def showWeather():
     response=requests.get(weather_url)
     weather_info=response.json()
     tfield.delete("1.0","end")
-    if weather_info['cod']==200:
+    try:
         kelvin=273
         temp=int(weather_info['main']['temp']-kelvin)
         feels_like_temp=int(weather_info['main']['feels_like']-kelvin)
@@ -33,7 +33,7 @@ def showWeather():
         sunrise_time=time_format_for_location(sunrise+timezone)
         sunset_time=time_format_for_location(sunset+timezone)
         weather=f"\nWeather of: {city_name}\nTemperature (Celsius): {temp}°\nFeels like in (Celsius): {feels_like_temp}°\nPressure: {pressure} hPa\nHumidity: {humidity}%\nSunrise at {sunrise_time} and Sunset at {sunset_time}\nCloud: {cloudy}%\nInfo: {description}"
-    else:
+    except:
         weather=f"\n\tWeather for '{city_name}' not found!\n\tKindly Enter valid City Name !!"
     tfield.insert(INSERT,weather)
 city_head=Label(root,text='Enter City Name',font='Times_New_Roman 12').pack(pady=10)
